@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avia Client Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;700&family=Google+Sans+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --md-sys-color-primary: #D0BCFF;
+    --md-sys-color-on-primary: #381E72;
+    --md-sys-color-primary-container: #4F378B;
+    --md-sys-color-on-primary-container: #EADDFF;
+    --md-sys-color-secondary: #CCC2DC;
+    --md-sys-color-secondary-container: #4A4458;
+    --md-sys-color-on-secondary-container: #E8DEF8;
+    --md-sys-color-surface: #141218;
+    --md-sys-color-surface-variant: #49454F;
+    --md-sys-color-surface-container-lowest: #0F0D13;
+    --md-sys-color-surface-container-low: #1D1B20;
+    --md-sys-color-surface-container: #211F26;
+    --md-sys-color-surface-container-high: #2B2930;
+    --md-sys-color-surface-container-highest: #36343B;
+    --md-sys-color-on-surface: #E6E1E5;
+    --md-sys-color-on-surface-variant: #CAC4D0;
+    --md-sys-color-outline: #938F99;
+    --md-sys-color-outline-variant: #49454F;
+    --md-sys-color-tertiary: #EFB8C8;
+    --md-sys-color-tertiary-container: #633B48;
+    --md-elevation-1: 0 1px 2px rgba(0,0,0,.3), 0 1px 3px 1px rgba(0,0,0,.15);
+    --md-elevation-2: 0 1px 2px rgba(0,0,0,.3), 0 2px 6px 2px rgba(0,0,0,.15);
+    --md-elevation-3: 0 4px 8px 3px rgba(0,0,0,.15), 0 1px 3px rgba(0,0,0,.3);
+    --md-shape-corner-small: 8px;
+    --md-shape-corner-medium: 12px;
+    --md-shape-corner-large: 16px;
+    --md-shape-corner-extra-large: 28px;
+    --md-shape-corner-full: 50px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .top-app-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    background: var(--md-sys-color-surface-container-low);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    gap: 4px;
+  }
+
+  .app-bar-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+    letter-spacing: 0;
+    flex: 1;
+    padding-left: 4px;
+  }
+
+  .app-bar-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .nav-text-btn {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--md-sys-color-primary);
+    padding: 10px 12px;
+    border-radius: var(--md-shape-corner-full);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.01em;
+  }
+
+  .nav-text-btn:hover {
+    background: rgba(208,188,255,0.08);
+  }
+
+  .filled-tonal-btn {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--md-sys-color-on-secondary-container);
+    background: var(--md-sys-color-secondary-container);
+    padding: 10px 24px;
+    border-radius: var(--md-shape-corner-full);
+    border: none;
+    cursor: pointer;
+    transition: box-shadow 0.2s, filter 0.2s;
+    letter-spacing: 0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .filled-tonal-btn:hover {
+    box-shadow: var(--md-elevation-1);
+    filter: brightness(1.08);
+  }
+
+  .filled-btn {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--md-sys-color-on-primary);
+    background: var(--md-sys-color-primary);
+    padding: 10px 24px;
+    border-radius: var(--md-shape-corner-full);
+    border: none;
+    cursor: pointer;
+    transition: box-shadow 0.2s, filter 0.2s;
+    letter-spacing: 0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .filled-btn:hover {
+    box-shadow: var(--md-elevation-2);
+    filter: brightness(0.96);
+  }
+
+  .outlined-btn {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--md-sys-color-primary);
+    background: transparent;
+    padding: 10px 24px;
+    border-radius: var(--md-shape-corner-full);
+    border: 1px solid var(--md-sys-color-outline);
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .outlined-btn:hover {
+    background: rgba(208,188,255,0.08);
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .hero {
+    padding: 72px 0 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: var(--md-shape-corner-full);
+    width: fit-content;
+    margin-bottom: 24px;
+  }
+
+  .hero-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--md-sys-color-primary);
+    flex-shrink: 0;
+  }
+
+  .display-large {
+    font-size: clamp(36px, 6vw, 57px);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    color: var(--md-sys-color-on-surface);
+    margin-bottom: 20px;
+  }
+
+  .display-large .accent {
+    color: var(--md-sys-color-primary);
+  }
+
+  .body-large {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--md-sys-color-on-surface-variant);
+    max-width: 520px;
+    margin-bottom: 36px;
+    font-weight: 400;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .section {
+    padding: 48px 0;
+  }
+
+  .label-large {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--md-sys-color-primary);
+    margin-bottom: 20px;
+  }
+
+  .title-large {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--md-sys-color-outline-variant);
+    border: none;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .md-card {
+    background: var(--md-sys-color-surface-container);
+    border-radius: var(--md-shape-corner-large);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: box-shadow 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .md-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--md-sys-color-primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .md-card:hover::before { opacity: 0.05; }
+  .md-card:hover { box-shadow: var(--md-elevation-2); }
+
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--md-shape-corner-medium);
+    background: var(--md-sys-color-primary-container);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 4px;
+    flex-shrink: 0;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+    letter-spacing: -0.01em;
+  }
+
+  .card-body {
+    font-size: 14px;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 1.55;
+    font-weight: 400;
+  }
+
+  .download-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+
+  .download-card {
+    background: var(--md-sys-color-surface-container-high);
+    border-radius: var(--md-shape-corner-extra-large);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .download-card:hover {
+    box-shadow: var(--md-elevation-3);
+  }
+
+  .download-card.primary-card {
+    background: var(--md-sys-color-primary-container);
+  }
+
+  .dl-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--md-sys-color-on-surface-variant);
+    background: var(--md-sys-color-surface-container-highest);
+    padding: 4px 10px;
+    border-radius: var(--md-shape-corner-full);
+    width: fit-content;
+  }
+
+  .primary-card .dl-chip {
+    background: rgba(0,0,0,0.2);
+    color: var(--md-sys-color-on-primary-container);
+  }
+
+  .dl-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+    letter-spacing: -0.02em;
+  }
+
+  .primary-card .dl-title {
+    color: var(--md-sys-color-on-primary-container);
+  }
+
+  .dl-desc {
+    font-size: 14px;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 1.55;
+    flex: 1;
+    font-weight: 400;
+  }
+
+  .primary-card .dl-desc {
+    color: rgba(234,221,255,0.8);
+  }
+
+  /* Third-party section */
+  .third-party-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--md-sys-color-outline);
+    margin: 28px 0 12px;
+  }
+
+  .third-party-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .third-party-card {
+    background: var(--md-sys-color-surface-container);
+    border-radius: var(--md-shape-corner-extra-large);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: 1px solid var(--md-sys-color-outline-variant);
+    transition: box-shadow 0.2s;
+  }
+
+  .third-party-card:hover {
+    box-shadow: var(--md-elevation-2);
+  }
+
+  .tp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tp-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--md-sys-color-tertiary);
+    background: var(--md-sys-color-tertiary-container);
+    padding: 4px 10px;
+    border-radius: var(--md-shape-corner-full);
+    width: fit-content;
+  }
+
+  .tp-dev-badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--md-sys-color-outline);
+    letter-spacing: 0.02em;
+  }
+
+  .tp-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+    letter-spacing: -0.02em;
+  }
+
+  .tp-desc {
+    font-size: 14px;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 1.55;
+    flex: 1;
+    font-weight: 400;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    background: var(--md-sys-color-surface-container);
+    border-radius: var(--md-shape-corner-large);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .stat-number {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--md-sys-color-primary);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s;
+  }
+
+  .stat-number.loading { color: var(--md-sys-color-outline); }
+
+  .stat-label {
+    font-size: 14px;
+    color: var(--md-sys-color-on-surface-variant);
+    font-weight: 500;
+  }
+
+  .stat-sub {
+    font-size: 11px;
+    color: var(--md-sys-color-outline);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  .info-banner {
+    background: var(--md-sys-color-surface-container);
+    border-radius: var(--md-shape-corner-large);
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border-left: 3px solid var(--md-sys-color-primary);
+    margin-bottom: 24px;
+  }
+
+  .info-banner-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .info-banner-text {
+    font-size: 14px;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 1.55;
+  }
+
+  .info-banner-text a {
+    color: var(--md-sys-color-primary);
+    font-weight: 600;
+  }
+
+  .info-banner-text a:hover {
+    text-decoration: underline;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .feature-card {
+    background: var(--md-sys-color-surface-container-low);
+    border-radius: var(--md-shape-corner-large);
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: background 0.2s;
+  }
+
+  .feature-card:hover {
+    background: var(--md-sys-color-surface-container);
+  }
+
+  .feature-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--md-shape-corner-medium);
+    background: var(--md-sys-color-secondary-container);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .feature-content h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .feature-content p {
+    font-size: 13px;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  footer {
+    background: var(--md-sys-color-surface-container-low);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    padding: 32px 16px;
+    margin-top: 48px;
+  }
+
+  .footer-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .footer-brand {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .footer-note {
+    font-size: 12px;
+    color: var(--md-sys-color-outline);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--md-sys-color-primary);
+    padding: 8px 12px;
+    border-radius: var(--md-shape-corner-full);
+    transition: background 0.2s;
+  }
+
+  .footer-links a:hover {
+    background: rgba(208,188,255,0.08);
+  }
+
+  @media (max-width: 600px) {
+    .top-app-bar .nav-text-btn { display: none; }
+    .display-large { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top-app-bar">
+  <span class="app-bar-title">Avia Client</span>
+  <div class="app-bar-actions">
+    <a href="#features" class="nav-text-btn">Features</a>
+    <a href="#plugins" class="nav-text-btn">Plugins</a>
+    <a href="#download" class="nav-text-btn">Download</a>
+    <a href="https://github.com/AvaLilac" target="_blank" rel="noopener" class="filled-tonal-btn">GitHub</a>
+  </div>
+</header>
+
+<div class="page">
+
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      Fork of Stoat Client
+    </div>
+    <h1 class="display-large">The Stoat client<br>you <span class="accent">actually want</span></h1>
+    <p class="body-large">Avia Client adds Plugins, QuickCSS, Themes, font loading, and more on top of Stoat available as a desktop app, userscript, or browser build.</p>
+    <div class="hero-actions">
+      <a href="#download" class="filled-btn">↓ Download</a>
+      <a href="#plugins" class="outlined-btn">Browse plugins</a>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="section" id="features">
+    <p class="label-large">Features</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🧩</div>
+        <div class="feature-content">
+          <h4>Full Plugin Support</h4>
+          <p>Install community plugins or write your own with JavaScript. Local plugins supported too.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🎨</div>
+        <div class="feature-content">
+          <h4>Quick CSS</h4>
+          <p>Modify the desktop client directly with CSS live, no reload required.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🖌️</div>
+        <div class="feature-content">
+          <h4>Themes</h4>
+          <p>A dedicated Themes panel so you don't have to rely on QuickCSS. Create themes right inside the UI.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">🔤</div>
+        <div class="feature-content">
+          <h4>Font Loader & Remover</h4>
+          <p>Load custom fonts into the app, or restore the default font with one click.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">⭐</div>
+        <div class="feature-content">
+          <h4>Favourites System</h4>
+          <p>Save and quickly access your favourite YouTube links and images.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon-wrap">📦</div>
+        <div class="feature-content">
+          <h4>Local Plugins</h4>
+          <p>Load plugins from your own machine with the new Local Plugins UI. View source code via the built-in View button.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="section" id="download">
+    <p class="label-large">Download</p>
+    <div class="download-cards">
+      <div class="download-card primary-card">
+        <span class="dl-chip">🖥️ Recommended</span>
+        <span class="dl-title">Desktop App</span>
+        <p class="dl-desc">A full fork of the Stoat desktop client. Download the latest release and run it no setup needed.</p>
+        <a href="https://github.com/AvaLilac/for-desktop/releases" target="_blank" rel="noopener" class="filled-btn" style="margin-top:4px; width:fit-content;">Latest release ↗</a>
+      </div>
+      <div class="download-card">
+        <span class="dl-chip">📜 Userscript</span>
+        <span class="dl-title">Userscript</span>
+        <p class="dl-desc">Inject Avia into the Stoat web app via Tampermonkey or Violentmonkey.</p>
+        <a href="https://github.com/AvaLilac/Ava-Client/raw/refs/heads/main/userscript/AviaClient.user.js" target="_blank" rel="noopener" class="outlined-btn" style="margin-top:4px; width:fit-content;">Get .user.js ↗</a>
+      </div>
+      <div class="download-card">
+        <span class="dl-chip">🌐 Browser</span>
+        <span class="dl-title">Browser Build</span>
+        <p class="dl-desc">A browser extension for Chrome and Firefox. No userscript manager required.</p>
+        <a href="https://github.com/AvaLilac/Ava-Client" target="_blank" rel="noopener" class="outlined-btn" style="margin-top:4px; width:fit-content;">Install extension ↗</a>
+      </div>
+    </div>
+
+    <p class="third-party-label">Third-party releases</p>
+    <div class="third-party-cards">
+      <div class="third-party-card">
+        <div class="tp-header">
+          <span class="tp-chip">📱 Userscript</span>
+          <span class="tp-dev-badge">by 0simp</span>
+        </div>
+        <span class="tp-title">Avia Client Mobile</span>
+        <p class="tp-desc">Adds additional integrated plugins and CSS to make Avia Client fully usable on mobile</p>
+        <a href="https://github.com/0simp/AviaClientMobile/raw/refs/heads/main/Avia-Client-Mobile.user.js" target="_blank" rel="noopener" class="outlined-btn" style="margin-top:4px; width:fit-content;">Get .user.js ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="section" id="plugins">
+    <p class="label-large">Community Plugins</p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-number loading" id="plugin-count">—</span>
+        <span class="stat-label">Community plugins</span>
+        <span class="stat-sub" id="plugin-sub">fetching from backend…</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">3</span>
+        <span class="stat-label">Install methods</span>
+        <span class="stat-sub">Desktop · Userscript · Browser</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Open source</span>
+        <span class="stat-sub">Every plugin is readable</span>
+      </div>
+    </div>
+
+    <div class="info-banner">
+      <span class="info-banner-icon">🧩</span>
+      <span class="info-banner-text">
+        Browse and install community plugins at <a href="https://avalilac.github.io/PluginRepo/" target="_blank" rel="noopener">avalilac.github.io/PluginRepo</a>. Anyone can contribute all plugins are open source and fetched from their own source URLs.
+      </span>
+    </div>
+
+    <div class="cards-grid">
+      <div class="md-card">
+        <div class="card-icon">📥</div>
+        <span class="card-title">One-click install</span>
+        <p class="card-body">Paste a plugin URL or pick from the community repo and enable it with a toggle.</p>
+      </div>
+      <div class="md-card">
+        <div class="card-icon">💻</div>
+        <span class="card-title">Local plugins</span>
+        <p class="card-body">Load plugins from files on your own machine using the Local Plugins UI.</p>
+      </div>
+      <div class="md-card">
+        <div class="card-icon">🔍</div>
+        <span class="card-title">View source</span>
+        <p class="card-body">Every plugin has a View button so you can read the code before running it.</p>
+      </div>
+      <div class="md-card">
+        <div class="card-icon">🔄</div>
+        <span class="card-title">Auto-updating</span>
+        <p class="card-body">Plugins load from their source URLs so they stay current without reinstalling.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Avia Client</div>
+      <div class="footer-note">© 2026 AviaClient Team. Not affiliated with Stoat or its developers.</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="https://github.com/AvaLilac" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://avalilac.github.io/PluginRepo/" target="_blank" rel="noopener">Plugin Repo</a></li>
+	  <li><a href="#Not-ready-yet" target="_blank" rel="noopener">List Of Developers (Not Available yet)</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+const BACKEND = "https://raw.githubusercontent.com/AvaLilac/PluginRepo/refs/heads/main/pluginrepobackend.js";
+
+async function loadCount() {
+  const el = document.getElementById("plugin-count");
+  const sub = document.getElementById("plugin-sub");
+  try {
+    const res = await fetch(BACKEND);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); }
+    catch { const m = text.match(/\{[\s\S]*\}/); if (!m) throw new Error(); data = JSON.parse(m[0]); }
+    const count = Array.isArray(data.plugins) ? data.plugins.length : 0;
+    el.textContent = count;
+    el.classList.remove("loading");
+    sub.textContent = "live · github.com/AvaLilac/PluginRepo";
+  } catch(e) {
+    el.textContent = "?";
+    el.classList.remove("loading");
+    sub.textContent = "could not reach backend";
+  }
+}
+
+loadCount();
+</script>
+
+</body>
+</html>
