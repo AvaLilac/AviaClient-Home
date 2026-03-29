@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avia Client — Developers</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --md-sys-color-primary: #D0BCFF;
+    --md-sys-color-on-primary: #381E72;
+    --md-sys-color-primary-container: #4F378B;
+    --md-sys-color-on-primary-container: #EADDFF;
+    --md-sys-color-secondary: #CCC2DC;
+    --md-sys-color-secondary-container: #4A4458;
+    --md-sys-color-on-secondary-container: #E8DEF8;
+    --md-sys-color-surface: #141218;
+    --md-sys-color-surface-container-low: #1D1B20;
+    --md-sys-color-surface-container: #211F26;
+    --md-sys-color-surface-container-high: #2B2930;
+    --md-sys-color-surface-container-highest: #36343B;
+    --md-sys-color-on-surface: #E6E1E5;
+    --md-sys-color-on-surface-variant: #CAC4D0;
+    --md-sys-color-outline: #938F99;
+    --md-sys-color-outline-variant: #49454F;
+    --md-elevation-1: 0 1px 2px rgba(0,0,0,.3), 0 1px 3px 1px rgba(0,0,0,.15);
+    --md-elevation-2: 0 1px 2px rgba(0,0,0,.3), 0 2px 6px 2px rgba(0,0,0,.15);
+    --md-elevation-3: 0 4px 8px 3px rgba(0,0,0,.15), 0 1px 3px rgba(0,0,0,.3);
+    --md-shape-corner-medium: 12px;
+    --md-shape-corner-large: 16px;
+    --md-shape-corner-extra-large: 28px;
+    --md-shape-corner-full: 50px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .top-app-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    background: var(--md-sys-color-surface-container-low);
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    gap: 4px;
+  }
+
+  .app-bar-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+    flex: 1;
+    padding-left: 4px;
+  }
+
+  .app-bar-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .filled-tonal-btn {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--md-sys-color-on-secondary-container);
+    background: var(--md-sys-color-secondary-container);
+    padding: 10px 24px;
+    border-radius: var(--md-shape-corner-full);
+    border: none;
+    cursor: pointer;
+    transition: box-shadow 0.2s, filter 0.2s;
+    letter-spacing: 0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .filled-tonal-btn:hover {
+    box-shadow: var(--md-elevation-1);
+    filter: brightness(1.08);
+  }
+
+  .outlined-btn {
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--md-sys-color-primary);
+    background: transparent;
+    padding: 10px 24px;
+    border-radius: var(--md-shape-corner-full);
+    border: 1px solid var(--md-sys-color-outline);
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.01em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .outlined-btn:hover { background: rgba(208,188,255,0.08); }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .hero {
+    padding: 72px 0 48px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: var(--md-shape-corner-full);
+    width: fit-content;
+    margin-bottom: 24px;
+  }
+
+  .hero-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--md-sys-color-primary);
+    flex-shrink: 0;
+  }
+
+  .display-large {
+    font-size: clamp(36px, 6vw, 57px);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    margin-bottom: 20px;
+  }
+
+  .display-large .accent { color: var(--md-sys-color-primary); }
+
+  .body-large {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--md-sys-color-on-surface-variant);
+    max-width: 520px;
+    margin-bottom: 36px;
+    font-weight: 400;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--md-sys-color-outline-variant);
+    border: none;
+  }
+
+  .section {
+    padding: 48px 0;
+  }
+
+  .label-large {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--md-sys-color-primary);
+    margin-bottom: 20px;
+  }
+
+  .dev-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 12px;
+  }
+
+  .dev-card {
+    background: var(--md-sys-color-surface-container);
+    border-radius: var(--md-shape-corner-extra-large);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dev-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--md-sys-color-primary);
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .dev-card:hover { box-shadow: var(--md-elevation-3); }
+  .dev-card:hover::before { opacity: 0.04; }
+
+.dev-card.is-lead {
+  background: var(--md-sys-color-surface-container-high);
+}
+
+  .dev-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .dev-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--md-shape-corner-full);
+    background: var(--md-sys-color-surface-container-highest);
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--md-sys-color-primary);
+  }
+
+  .is-lead .dev-avatar {
+    background: rgba(0,0,0,0.2);
+    color: var(--md-sys-color-on-primary-container);
+  }
+
+  .dev-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .dev-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .dev-name {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .is-lead .dev-name { color: var(--md-sys-color-on-primary-container); }
+
+  .role-chip {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: var(--md-shape-corner-full);
+    width: fit-content;
+    background: var(--md-sys-color-surface-container-highest);
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .is-lead .role-chip {
+    background: rgba(0,0,0,0.2);
+    color: var(--md-sys-color-on-primary-container);
+  }
+
+  .dev-bio {
+    font-size: 14px;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 1.6;
+    font-weight: 400;
+    flex: 1;
+  }
+
+  .is-lead .dev-bio { color: rgba(234,221,255,0.85); }
+
+  .dev-card-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .github-btn {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--md-sys-color-primary);
+    background: transparent;
+    padding: 8px 18px;
+    border-radius: var(--md-shape-corner-full);
+    border: 1px solid var(--md-sys-color-outline);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    letter-spacing: 0.01em;
+  }
+
+  .github-btn:hover {
+    background: rgba(208,188,255,0.08);
+    border-color: var(--md-sys-color-primary);
+  }
+
+  .is-lead .github-btn {
+    color: var(--md-sys-color-on-primary-container);
+    border-color: rgba(234,221,255,0.4);
+  }
+
+  .is-lead .github-btn:hover {
+    background: rgba(0,0,0,0.12);
+    border-color: var(--md-sys-color-on-primary-container);
+  }
+
+  .github-icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    fill: currentColor;
+  }
+
+  .dev-loading {
+    grid-column: 1 / -1;
+    padding: 48px 0;
+    text-align: center;
+    font-size: 15px;
+    color: var(--md-sys-color-outline);
+  }
+
+  .dev-error {
+    grid-column: 1 / -1;
+    padding: 24px;
+    background: var(--md-sys-color-surface-container);
+    border-radius: var(--md-shape-corner-large);
+    text-align: center;
+    font-size: 14px;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  footer {
+    background: var(--md-sys-color-surface-container-low);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    padding: 32px 16px;
+    margin-top: 48px;
+  }
+
+  .footer-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .footer-brand {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .footer-note {
+    font-size: 12px;
+    color: var(--md-sys-color-outline);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--md-sys-color-primary);
+    padding: 8px 12px;
+    border-radius: var(--md-shape-corner-full);
+    transition: background 0.2s;
+  }
+
+  .footer-links a:hover { background: rgba(208,188,255,0.08); }
+
+  @media (max-width: 600px) {
+    .display-large { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top-app-bar">
+  <span class="app-bar-title">Avia Client</span>
+  <div class="app-bar-actions">
+    <a href="https://avalilac.github.io/AviaClient-Home/" class="filled-tonal-btn">← Home</a>
+  </div>
+</header>
+
+<div class="page">
+
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      The Team
+    </div>
+    <h1 class="display-large">The people behind<br><span class="accent">Avia Client</span></h1>
+    <p class="body-large">The developers building and maintaining Avia Client and its ecosystem.</p>
+    <div class="hero-actions">
+      <a href="https://avalilac.github.io/AviaClient-Home/" class="outlined-btn">← Back to home</a>
+      <a href="https://github.com/AvaLilac" target="_blank" rel="noopener" class="filled-tonal-btn">GitHub</a>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="section">
+    <p class="label-large">Developers</p>
+    <div class="dev-grid" id="dev-grid">
+      <div class="dev-loading" id="dev-loading">Loading…</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Avia Client</div>
+      <div class="footer-note">© 2026 AviaClient Team. Not affiliated with Stoat or its developers.</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="https://avalilac.github.io/AviaClient-Home/">Home</a></li>
+      <li><a href="https://github.com/AvaLilac" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://avalilac.github.io/PluginRepo/" target="_blank" rel="noopener">Plugin Repo</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+const BACKEND = "https://raw.githubusercontent.com/AvaLilac/AviaClient-Home/refs/heads/main/teambackend/developers.json";
+
+const GITHUB_SVG = `<svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`;
+
+function initials(name) {
+  return name.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+}
+
+function makeCard(dev) {
+  const isLead = (dev.role || '').toLowerCase().includes('lead');
+  const avatarUrl = `https://github.com/${dev.github}.png`;
+  const githubUrl = `https://github.com/${dev.github}`;
+
+  const card = document.createElement('div');
+  card.className = 'dev-card' + (isLead ? ' is-lead' : '');
+
+  card.innerHTML = `
+    <div class="dev-top">
+      <div class="dev-avatar" id="avatar-${dev.github}">
+        <span>${initials(dev.name)}</span>
+      </div>
+      <div class="dev-info">
+        <span class="dev-name">${esc(dev.name)}</span>
+        <span class="role-chip">${esc(dev.role)}</span>
+      </div>
+    </div>
+    <p class="dev-bio">${esc(dev.bio)}</p>
+    <div class="dev-card-footer">
+      <a href="${githubUrl}" target="_blank" rel="noopener" class="github-btn">
+        ${GITHUB_SVG} GitHub
+      </a>
+    </div>
+  `;
+
+  const avatarWrap = card.querySelector(`#avatar-${dev.github}`);
+  const img = new Image();
+  img.onload = () => {
+    avatarWrap.innerHTML = '';
+    avatarWrap.appendChild(img);
+  };
+  img.src = avatarUrl;
+  img.alt = dev.name;
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;';
+
+  return card;
+}
+
+function esc(s) {
+  return String(s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+async function loadDevs() {
+  const grid = document.getElementById('dev-grid');
+  const loading = document.getElementById('dev-loading');
+
+  try {
+    const res = await fetch(BACKEND);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    const devs = Array.isArray(data.developers) ? data.developers : [];
+
+    loading.remove();
+
+    if (devs.length === 0) {
+      grid.innerHTML = '<div class="dev-error">No developers found in backend.</div>';
+      return;
+    }
+
+    devs.forEach(dev => grid.appendChild(makeCard(dev)));
+
+  } catch (err) {
+    loading.className = 'dev-error';
+    loading.textContent = 'Could not load developers. ' + err.message;
+    console.error('[Avia] devs backend error:', err);
+  }
+}
+
+loadDevs();
+</script>
+
+</body>
+</html>
